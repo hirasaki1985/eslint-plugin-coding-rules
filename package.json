@@ -1,0 +1,30 @@
+{
+  "name": "eslint-plugin-coding-rules",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "test": "npm run jest",
+    "jest": "jest"
+  },
+  "keywords": [],
+  "author": "Mamoru Hirasaki <hirasaki1985@gmail.com> (https://walking-succession-falls.com/)",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/eslint": "^8.2.1",
+    "@types/estree": "^0.0.50",
+    "@types/node": "^16.11.11",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "eslint": "^8.4.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.4.3",
+    "prettier": "2.5.1",
+    "ts-jest": "^27.1.0",
+    "tsup": "^5.10.1",
+    "typescript": "^4.5.2"
+  }
+}
