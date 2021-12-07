@@ -9,17 +9,13 @@ const defaultParserOptions: Linter.ParserOptions = {
   sourceType: "module",
 };
 
-export default function parserOptionsMapper({
-  code,
-  options = [],
-  parserOptions = {},
-}: RuleTester.ValidTestCase): RuleTester.ValidTestCase {
+export default function parserOptionsMapper(
+  rule: RuleTester.ValidTestCase
+): RuleTester.ValidTestCase {
   return {
-    code,
-    options,
+    ...rule,
     parserOptions: {
       ...defaultParserOptions,
-      ...parserOptions,
     },
   };
 }
