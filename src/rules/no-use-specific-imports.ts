@@ -57,6 +57,10 @@ const configRuleItem = {
  */
 const ruleModule: Rule.RuleModule = {
   meta: {
+    docs: {
+      description:
+        "Disallow specific imports from specific dirs or source files.",
+    },
     type: "suggestion",
     messages: {
       invalidOptionsFormat: "options format is wrong.",

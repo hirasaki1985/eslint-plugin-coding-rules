@@ -74,24 +74,22 @@ format is
 ```
   "rules": {
     "no-use-specific-imports": [
-      {
-        filePath: [
-          "**/components/atoms/**",
-          "**/components/moleculres/**",
-          "**/components/organisms/**",
-        ],
-        importName: ["react-redux", "**/stores"],
-      },
-      {
-        filePath: [
-          "**/components/atoms/**",
-          "**/components/moleculres/**",
-          "**/components/organisms/**",
-          "**/pages/**",
-        ],
-        importName: ["**/*Service"],
-        message: "'{{importSource}}'からは'{{importFrom}}'をインポートすることはできません。",
-      },
+      'error',
+      [
+        {
+          filePath: [
+            "**/components/**",
+          ],
+          importName: ["react-redux", "**/stores"],
+        },
+        {
+          filePath: [
+            "**/pages/**",
+          ],
+          importName: ["**/*Service", "**/ServiceFactory"],
+          message: "'{{importSource}}'からは'{{importFrom}}'をインポートすることはできません。",
+        },
+      ]
     ]
   }
 ```
@@ -111,3 +109,7 @@ Files with paths that match `filePath` will not be able to import the library sp
 Control the data processing flow by preventing direct import.
 
 react sample code is here [sample code](./test/samples/react)
+
+### Implementation
+* [Rule source](./src/rules/no-use-specific-imports.ts)
+* [Test source](./test/rules/no-use-specific-imports.test.ts)
