@@ -24,6 +24,23 @@ export function isAllowImport(
 }
 
 /**
+ * getNotAllowImport
+ */
+export function getNotAllowImport(
+  configs: NoUseSpecificImportsConfig,
+  filePath: string,
+  importLibraryName: string
+): NoUseSpecificImportsConfigItem | undefined {
+  // validate
+  if (configs == null && !Array.isArray(configs)) return;
+
+  // config check loop
+  return configs.find((_config) => {
+    return !checkAllowImport(_config, filePath, importLibraryName);
+  });
+}
+
+/**
  * checkAllowImport
  * @return {boolean} true = allow, false = not allow
  */
@@ -33,20 +50,20 @@ export function checkAllowImport(
   importLibraryName: string
 ): boolean {
   // validate
-  if (config.path == null || config.path === "") return true;
-  if (config.import == null || config.import === "") return true;
+  if (config.filePath == null || config.filePath === "") return true;
+  if (config.importName == null || config.importName === "") return true;
 
   if (
-    (typeof config.path === "string" || Array.isArray(config.path)) &&
-    (typeof config.import === "string" || Array.isArray(config.import))
+    (typeof config.filePath === "string" || Array.isArray(config.filePath)) &&
+    (typeof config.importName === "string" || Array.isArray(config.importName))
   ) {
     // check file path
-    const isMatchFilePath = isMatchPattern(filePath, config.path);
+    const isMatchFilePath = isMatchPattern(filePath, config.filePath);
 
     if (!isMatchFilePath) return true;
 
     // check import
-    return !isMatchPattern(importLibraryName, config.import);
+    return !isMatchPattern(importLibraryName, config.importName);
   }
 
   return true;

@@ -1,38 +1,185 @@
 import * as fs from "fs";
 import { RuleTester } from "eslint";
-import noUseSpecificImports from "../../src/rules/no-use-specific-imports";
-import parserOptionsMapper from "../__utils__/parserOptionsMapper";
+import noUseSpecificImports, {
+  NoUseSpecificImportsConfig,
+} from "../../src/rules/no-use-specific-imports";
+import {
+  parserValidOptionsMapper,
+  parserInValidOptionsMapper,
+} from "../__utils__/parserValidOptionsMapper";
+
+/**
+ * options
+ */
+const defaultLibraryOption: NoUseSpecificImportsConfig = [
+  // redux, stores
+  {
+    filePath: [
+      "**/components/atoms/**",
+      "**/components/molecules/**",
+      "**/components/organisms/**",
+    ],
+    importName: ["react-redux", "**/stores"],
+  },
+
+  // service
+  {
+    filePath: [
+      "**/components/atoms/**",
+      "**/components/molecules/**",
+      "**/components/organisms/**",
+      "**/pages/**",
+    ],
+    importName: ["**/*Service", "**/ServiceFactory"],
+  },
+
+  // repository
+  {
+    filePath: [
+      "**/components/atoms/**",
+      "**/components/molecules/**",
+      "**/components/organisms/**",
+      "**/pages/**",
+      "**/stores/hooks/**",
+    ],
+    importName: "**/*Repository",
+  },
+];
 
 const ruleTester = new RuleTester();
 
-const validFiles = ["./test/samples/react/components/atoms/ButtonAtom.tsx"];
-
-const invalidFiles = [
-  "./test/samples/react/components/atoms/InvalidAtom.tsx",
-  "./test/samples/react/components/molecules/InvalidMolecules.tsx",
-  "./test/samples/react/components/organisms/InvalidOrganisms.tsx",
-  "./test/samples/react/modules/invalid/InvalidService.ts",
-  "./test/samples/react/pages/InvalidPage.tsx",
-  "./test/samples/react/stores/hooks/InvalidActionHook.ts",
-];
-
+/**
+ * run: no-use-specific-imports"
+ */
 ruleTester.run("no-use-specific-imports", noUseSpecificImports, {
-  valid: validFiles
-    .map((_filePath) => {
+  /**
+   * valid
+   */
+  valid: [
+    // other
+    {
+      filePath: "./test/samples/react/components/Toast.tsx",
+      importName: "import React from 'react'",
+      options: defaultLibraryOption,
+    },
+
+    // atom
+    {
+      filePath: "./test/samples/react/components/atoms/ButtonAtom.tsx",
+      importName: "import React from 'react'",
+      options: defaultLibraryOption,
+    },
+    {
+      filePath: "./test/samples/react/components/atoms/ButtonAtom.tsx",
+      importName: "import { Theme, useTheme } from '@material-ui/core'",
+      options: defaultLibraryOption,
+    },
+    {
+      filePath: "./test/samples/react/components/atoms/TextAtom.tsx",
+      importName: "import moment from 'moment'",
+      options: defaultLibraryOption,
+    },
+    {
+      filePath: "./test/samples/react/components/atoms/TextAtom.tsx",
+      importName:
+        "import {\n" +
+        "  CartesianGrid,\n" +
+        "  Line,\n" +
+        "  LineChart,\n" +
+        "  ResponsiveContainer,\n" +
+        "  Tooltip,\n" +
+        "  XAxis,\n" +
+        "  YAxis,\n" +
+        "} from 'recharts'",
+      options: defaultLibraryOption,
+    },
+
+    // molecules
+    {
+      filePath:
+        "./test/samples/react/components/molecules/HealthCheckMolecules.tsx",
+      importName: "import React from 'react'",
+      options: defaultLibraryOption,
+    },
+
+    // organisms
+    {
+      filePath: "@/components/atoms/HealthCheckOrganisms.tsx",
+      importName: "import React from 'react'",
+      options: defaultLibraryOption,
+    },
+  ]
+    .map((_validFile) => {
       return {
         // code: loadSampleSourceFile(_filePath),
-        code: "import React from 'react'",
-        filename: _filePath,
-        options: [
-          {
-            path: "**/react/components/atoms/**",
-            import: "react-redux",
-          },
-        ],
+        code: _validFile.importName,
+        filename: _validFile.filePath,
+        options: _validFile.options,
       };
     })
-    .map(parserOptionsMapper),
-  invalid: [],
+    .map(parserValidOptionsMapper),
+
+  /**
+   * invalid
+   */
+  invalid: [
+    // atoms
+    {
+      filename: "./test/samples/react/components/atoms/ButtonAtom.tsx",
+      code: "import React from 'react-redux'",
+      errors: [
+        {
+          message:
+            "'./test/samples/react/components/atoms/ButtonAtom.tsx' can not import 'react-redux'",
+          type: "ImportDeclaration",
+        },
+      ],
+      options: defaultLibraryOption,
+    },
+    {
+      filename: "./test/samples/react/components/atoms/ButtonAtom.tsx",
+      code: "import ServiceFactory from '../../modules/ServiceFactory'",
+      errors: [
+        {
+          message:
+            "'./test/samples/react/components/atoms/ButtonAtom.tsx' can not import '../../modules/ServiceFactory'",
+          type: "ImportDeclaration",
+        },
+      ],
+      options: defaultLibraryOption,
+    },
+    {
+      filename: "./test/samples/react/components/atoms/ButtonAtom.tsx",
+      code: "import { RootState } from '../stores'",
+      errors: [
+        {
+          message:
+            "'./test/samples/react/components/atoms/ButtonAtom.tsx'からは'../stores'をインポートすることはできません。",
+          type: "ImportDeclaration",
+        },
+      ],
+      options: [
+        {
+          filePath: ["**/components/atoms/**"],
+          importName: ["react-redux", "**/stores"],
+          message:
+            "'{{importSource}}'からは'{{importFrom}}'をインポートすることはできません。",
+        },
+      ],
+    },
+  ]
+    .map((_invalidFiles) => {
+      return {
+        // code: loadSampleSourceFile(_filePath),
+        // ruleId: "no-use-specific-imports",
+        // severity: 1,
+        code: _invalidFiles.code,
+        filename: _invalidFiles.filename,
+        options: _invalidFiles.options,
+        errors: _invalidFiles.errors,
+      };
+    })
+    .map(parserInValidOptionsMapper),
 });
 
 /**
@@ -45,3 +192,13 @@ function loadSampleSourceFile(path: string): string {
   }
   return "";
 }
+
+/*
+// invalid files
+"./test/samples/react/components/atoms/InvalidAtom.tsx",
+"./test/samples/react/components/molecules/InvalidMolecules.tsx",
+"./test/samples/react/components/organisms/InvalidOrganisms.tsx",
+"./test/samples/react/modules/invalid/InvalidService.ts",
+"./test/samples/react/pages/InvalidPage.tsx",
+"./test/samples/react/stores/hooks/InvalidActionHook.ts",
+*/

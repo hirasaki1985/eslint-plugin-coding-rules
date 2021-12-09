@@ -6,31 +6,31 @@ import { NoUseSpecificImportsConfig } from "../../src/rules/no-use-specific-impo
 
 const pluginConfig: NoUseSpecificImportsConfig = [
   {
-    path: [
+    filePath: [
       "**/components/atoms/**",
       "**/components/molecules/**",
       "**/components/organisms/**",
     ],
-    import: ["react-redux", "**/stores"],
+    importName: ["react-redux", "**/stores"],
   },
   {
-    path: [
+    filePath: [
       "**/components/atoms/**",
       "**/components/molecules/**",
       "**/components/organisms/**",
       "**/pages/**",
     ],
-    import: ["**/*Service", "**/ServiceFactory"],
+    importName: ["**/*Service", "**/ServiceFactory"],
   },
   {
-    path: [
+    filePath: [
       "**/components/atoms/**",
       "**/components/molecules/**",
       "**/components/organisms/**",
       "**/pages/**",
       "**/stores/hooks/**",
     ],
-    import: "**/*Repository",
+    importName: "**/*Repository",
   },
 ];
 

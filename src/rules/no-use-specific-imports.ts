@@ -1,6 +1,9 @@
 import { Rule } from "eslint";
 import * as ESTree from "estree";
-import { isAllowImport } from "../services/NoUseSpecificImportsService";
+import {
+  getNotAllowImport,
+  isAllowImport,
+} from "../services/NoUseSpecificImportsService";
 
 /**
  * type
@@ -8,31 +11,77 @@ import { isAllowImport } from "../services/NoUseSpecificImportsService";
 export type NoUseSpecificImportsConfig = NoUseSpecificImportsConfigItem[];
 
 export interface NoUseSpecificImportsConfigItem {
-  path: string | string[];
-  import: string | string[];
+  filePath: string | string[];
+  importName: string | string[];
   message?: string;
 }
+
+const configRuleItem = {
+  type: "array",
+  items: {
+    anyOf: [
+      { type: "string" },
+      {
+        type: "object",
+        properties: {
+          filePath: {
+            type: "array",
+            item: {
+              type: "string",
+              minLength: 1,
+            },
+          },
+          importName: {
+            type: "array",
+            item: {
+              type: "string",
+              minLength: 1,
+            },
+          },
+          message: {
+            type: "string",
+            minLength: 1,
+          },
+          required: ["filePath", "importName"],
+        },
+        additionalProperties: false,
+      },
+    ],
+  },
+};
 
 /**
  * RuleModule
  */
 const ruleModule: Rule.RuleModule = {
   meta: {
+    type: "suggestion",
     messages: {
       invalidOptionsFormat: "options format is wrong.",
       invalidImport: "'{{importSource}}' can not import '{{importFrom}}'",
     },
+    /*
+    schema: {
+      anyOf: [
+        configRuleItem,
+        {
+          type: "array",
+          item: [
+            {
+              type: "object",
+              properties: configRuleItem,
+              additionalProperties: false,
+            },
+          ],
+          additionalProperties: false,
+        },
+      ],
+    },
+    */
   },
   create(context: Rule.RuleContext): Rule.RuleListener {
     const options = context.options;
     const targetFilePath = context.getPhysicalFilename();
-    /*
-    console.log("no-use-specific-imports ruleModule()", {
-      options,
-      targetFilePath,
-    });
-
-    */
 
     /**
      * checkOptionFormat
@@ -58,35 +107,57 @@ const ruleModule: Rule.RuleModule = {
       });
 
       if (typeof importFrom === "string") {
+        // check allow import
         const isAllow = isAllowImport(
           options as NoUseSpecificImportsConfig,
           targetFilePath,
           importFrom
         );
 
-        console.log({
-          isAllow,
-        });
-
+        // not allow
         if (!isAllow) {
-          context.report({
-            node,
-            messageId: "invalidImport",
-            data: {
-              importSource: targetFilePath,
-              importFrom,
-            },
+          const errorConfig = getNotAllowImport(
+            options as NoUseSpecificImportsConfig,
+            targetFilePath,
+            importFrom
+          );
+
+          console.log("not allow", {
+            errorConfig,
           });
+
+          // custom message
+          if (errorConfig && errorConfig.message) {
+            // create report
+            context.report({
+              node,
+              message: errorConfig.message,
+              data: {
+                importSource: targetFilePath,
+                importFrom,
+              },
+            });
+          } else {
+            // create report
+            context.report({
+              node,
+              messageId: "invalidImport",
+              data: {
+                importSource: targetFilePath,
+                importFrom,
+              },
+            });
+          }
         }
       }
     };
 
     return {
-      onCodePathStart: (codePath: Rule.CodePath, node: Rule.Node) => {
-        console.log({
-          codePath,
-        });
-      },
+      // onCodePathStart: (codePath: Rule.CodePath, node: Rule.Node) => {
+      //   console.log({
+      //     codePath,
+      //   });
+      // },
       ImportDeclaration: checkNode,
       ExportNamedDeclaration(node) {
         if (node.source) {
