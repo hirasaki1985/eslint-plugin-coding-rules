@@ -1,0 +1,25 @@
+name: Lint
+on: push
+jobs:
+  run-linters:
+    name: Lint
+    runs-on: ubuntu-latest
+    env:
+      working-directory: .
+    steps:
+      - name: Check out
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+
+      - name: Install packages
+        run: npm ci
+        working-directory: ${{env.working-directory}}
+
+      # lint
+      - name: Prettier
+        run: npm run fix
+        working-directory: ${{env.working-directory}}
