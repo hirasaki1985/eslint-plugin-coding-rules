@@ -1,34 +1,34 @@
-import { AxiosInstance, AxiosResponse } from 'axios'
+import { AxiosInstance, AxiosResponse } from "axios";
 import {
   HttpRequestParams,
   HttpResponse,
   WebApiContentType,
   WebApiMethod,
-} from '../../consts/HttpConsts'
-import WebApiResponse from './WebApiResponse'
-import ObjectUtil from '../../utils/ObjectUtil'
+} from "../../consts/HttpConsts";
+import WebApiResponse from "./WebApiResponse";
+import ObjectUtil from "../../utils/ObjectUtil";
 
 /**
  * Web Api Request
  */
 class WebApiRequest<Req, Res> {
   // parameters
-  private baseUrl: string
+  private baseUrl: string;
 
-  private path: string
+  private path: string;
 
-  private version: string
+  private version: string;
 
-  private method: WebApiMethod
+  private method: WebApiMethod;
 
-  private contentType: WebApiContentType
+  private contentType: WebApiContentType;
 
-  private withAuth: boolean
+  private withAuth: boolean;
 
-  private httpClient: AxiosInstance
+  private httpClient: AxiosInstance;
 
   // converter
-  private conversionCallback: (data: Res) => Res
+  private conversionCallback: (data: Res) => Res;
 
   constructor(
     baseUrl: string,
@@ -38,24 +38,24 @@ class WebApiRequest<Req, Res> {
     contentType: WebApiContentType,
     withAuth: boolean,
     httpClient: AxiosInstance,
-    conversionCallback: (data: any) => Res,
+    conversionCallback: (data: any) => Res
   ) {
     // parameters
-    this.baseUrl = baseUrl
-    this.path = path
-    this.version = version
-    this.method = method
-    this.contentType = contentType
-    this.withAuth = withAuth
-    this.httpClient = httpClient
-    this.conversionCallback = conversionCallback
+    this.baseUrl = baseUrl;
+    this.path = path;
+    this.version = version;
+    this.method = method;
+    this.contentType = contentType;
+    this.withAuth = withAuth;
+    this.httpClient = httpClient;
+    this.conversionCallback = conversionCallback;
   }
 
   /**
    * get request url
    */
   private getRequestUrl(path: string): string {
-    return `${this.baseUrl}${this.version}${path}`
+    return `${this.baseUrl}${this.version}${path}`;
   }
 
   /**
@@ -63,61 +63,61 @@ class WebApiRequest<Req, Res> {
    */
   public async execute(params?: Req): Promise<WebApiResponse<Res>> {
     // リクエストを実行
-    const response = await this.request(params)
+    const response = await this.request(params);
 
     // 戻り値を作成
-    return new WebApiResponse<Res>(response, this.conversionCallback)
+    return new WebApiResponse<Res>(response, this.conversionCallback);
   }
 
   /**
    *
    */
   private async request(params?: Req): Promise<HttpResponse> {
-    const requestParams: HttpRequestParams = ObjectUtil.filterNull(params)
-    const url = this.getRequestUrl(this.path)
-    let result: AxiosResponse
+    const requestParams: HttpRequestParams = ObjectUtil.filterNull(params);
+    const url = this.getRequestUrl(this.path);
+    let result: AxiosResponse;
 
     switch (this.method) {
       // get
       case WebApiMethod.GET:
-        result = await this.executeGetMethod(url, requestParams)
-        break
+        result = await this.executeGetMethod(url, requestParams);
+        break;
 
       // delete
       case WebApiMethod.DELETE:
-        result = await this.executeDeleteMethod(url, requestParams)
-        break
+        result = await this.executeDeleteMethod(url, requestParams);
+        break;
 
       // post
       case WebApiMethod.POST:
-        result = await this.executePostMethod(url, requestParams)
-        break
+        result = await this.executePostMethod(url, requestParams);
+        break;
 
       // put
       case WebApiMethod.PUT:
-        result = await this.executePutMethod(url, requestParams)
-        break
+        result = await this.executePutMethod(url, requestParams);
+        break;
 
       // patch
       case WebApiMethod.PATCH:
-        result = await this.executePatchMethod(url, requestParams)
-        break
+        result = await this.executePatchMethod(url, requestParams);
+        break;
 
       // default
       default:
-        throw new Error(`Illegal request method '${this.method}'.`)
+        throw new Error(`Illegal request method '${this.method}'.`);
     }
 
     if (result == null) {
-      throw new Error(`web api request is no response`)
+      throw new Error(`web api request is no response`);
     }
 
     return {
       status: Number(result.status),
       headers: result.headers,
       data: result.data,
-      errorMessage: '',
-    }
+      errorMessage: "",
+    };
   }
 
   /**
@@ -125,55 +125,55 @@ class WebApiRequest<Req, Res> {
    */
   private executeGetMethod = async (
     url: string,
-    params?: HttpRequestParams,
+    params?: HttpRequestParams
   ): Promise<AxiosResponse> => {
-    const result = await this.httpClient.get(url, { params })
-    return result
-  }
+    const result = await this.httpClient.get(url, { params });
+    return result;
+  };
 
   /**
    * postメソッドを実行する
    */
   private executePostMethod = async (
     url: string,
-    params?: HttpRequestParams,
+    params?: HttpRequestParams
   ): Promise<AxiosResponse> => {
-    const result = await this.httpClient.post(url, params)
-    return result
-  }
+    const result = await this.httpClient.post(url, params);
+    return result;
+  };
 
   /**
    * postメソッドを実行する
    */
   private executeDeleteMethod = async (
     url: string,
-    params?: HttpRequestParams,
+    params?: HttpRequestParams
   ): Promise<AxiosResponse> => {
-    const result = await this.httpClient.delete(url, { params })
-    return result
-  }
+    const result = await this.httpClient.delete(url, { params });
+    return result;
+  };
 
   /**
    * putメソッドを実行する
    */
   private executePutMethod = async (
     url: string,
-    params?: HttpRequestParams,
+    params?: HttpRequestParams
   ): Promise<AxiosResponse> => {
-    const result = await this.httpClient.put(url, params)
-    return result
-  }
+    const result = await this.httpClient.put(url, params);
+    return result;
+  };
 
   /**
    * patchメソッドを実行する
    */
   private executePatchMethod = async (
     url: string,
-    params?: HttpRequestParams,
+    params?: HttpRequestParams
   ): Promise<AxiosResponse> => {
-    const result = await this.httpClient.patch(url, params)
-    return result
-  }
+    const result = await this.httpClient.patch(url, params);
+    return result;
+  };
 }
 
-export default WebApiRequest
+export default WebApiRequest;

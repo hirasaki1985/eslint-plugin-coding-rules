@@ -1,5 +1,5 @@
-import Builder from '../WebApiRequestBuilder'
-import { WebApiMethod } from '../../../consts/HttpConsts'
+import Builder from "../WebApiRequestBuilder";
+import { WebApiMethod } from "../../../consts/HttpConsts";
 
 export default class HealthCheckWebApi {
   /**
@@ -7,8 +7,8 @@ export default class HealthCheckWebApi {
    */
   public static healthCheck() {
     return new Builder<HealthCheckWebApiRequest, HealthCheckWebApiResponse>(
-      '/heartbeat',
-      WebApiMethod.GET,
-    ).build()
+      "/heartbeat",
+      WebApiMethod.GET
+    ).build();
   }
 }

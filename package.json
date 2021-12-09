@@ -1,18 +1,32 @@
 {
   "name": "eslint-plugin-coding-rules",
   "version": "1.0.0",
-  "description": "",
+  "description": "eslint plugin for making coding rules.",
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin"
+  ],
   "main": "./dist/index.js",
   "files": [
     "dist/**"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hirasaki1985/eslint-plugin-coding-rules.git"
+  },
   "scripts": {
     "test": "npm run jest",
-    "jest": "jest"
+    "jest": "jest",
+    "eslint-check": "eslint --ext .ts .",
+    "eslint-fix": "eslint --ext .ts . --fix",
+    "prettier-fix": "prettier --write . ",
+    "fix": "npm run eslint-fix && npm run prettier-fix",
+    "build": "tsup src/index.ts --no-splitting --minify"
   },
-  "keywords": [],
   "author": "Mamoru Hirasaki <hirasaki1985@gmail.com> (https://walking-succession-falls.com/)",
-  "license": "ISC",
+  "license": "MIT",
+  "homepage": "https://github.com/hirasaki1985/eslint-plugin-coding-rules",
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@types/eslint": "^8.2.1",

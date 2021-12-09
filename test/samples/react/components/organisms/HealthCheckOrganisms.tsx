@@ -1,13 +1,13 @@
-import React from 'react'
-import HealthCheckMolecules from '../molecules/HealthCheckMolecules'
-import HealthCheckResultMolecules from '../molecules/HealthCheckResultMolecules'
+import React from "react";
+import HealthCheckMolecules from "../molecules/HealthCheckMolecules";
+import HealthCheckResultMolecules from "../molecules/HealthCheckResultMolecules";
 
 /**
  * Props
  */
 interface HealthCheckOrganismsProps {
-  onClickHealthCheckButton: () => void
-  result: HealthCheckResponse
+  onClickHealthCheckButton: () => void;
+  result: HealthCheckResponse;
 }
 
 /**
@@ -21,6 +21,6 @@ const HealthCheckOrganisms: React.FC<HealthCheckOrganismsProps> = ({
     <HealthCheckMolecules onClickHealthCheckButton={onClickHealthCheckButton} />
     <HealthCheckResultMolecules result={result} />
   </div>
-)
+);
 
-export default HealthCheckOrganisms
+export default HealthCheckOrganisms;

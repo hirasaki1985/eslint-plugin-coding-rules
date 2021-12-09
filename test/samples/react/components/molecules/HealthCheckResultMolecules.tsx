@@ -1,11 +1,11 @@
-import React from 'react'
-import moment from 'moment'
+import React from "react";
+import moment from "moment";
 
 /**
  * Props
  */
 interface HealthCheckResultMoleculesProps {
-  result: HealthCheckResponse
+  result: HealthCheckResponse;
 }
 
 /**
@@ -15,20 +15,20 @@ const HealthCheckResultMolecules: React.FC<HealthCheckResultMoleculesProps> = ({
   result,
 }) => {
   const getResultText = () => {
-    if (result?.checkTime == null) return '未実行'
-    return result?.success ? '成功' : '失敗'
-  }
+    if (result?.checkTime == null) return "未実行";
+    return result?.success ? "成功" : "失敗";
+  };
 
   return (
     <div>
       <div>{getResultText()}</div>
       <div>
         {result?.checkTime != null
-          ? moment(result.checkTime).format('YYYY-MM-DD HH:mm:ss')
-          : ''}
+          ? moment(result.checkTime).format("YYYY-MM-DD HH:mm:ss")
+          : ""}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default HealthCheckResultMolecules
+export default HealthCheckResultMolecules;

@@ -1,4 +1,3 @@
-import * as fs from "fs";
 import { RuleTester } from "eslint";
 import noUseSpecificImports, {
   NoUseSpecificImportsConfig,
@@ -108,6 +107,18 @@ ruleTester.run("no-use-specific-imports", noUseSpecificImports, {
       importName: "import React from 'react'",
       options: defaultLibraryOption,
     },
+
+    // single
+    {
+      filePath: "./test/samples/react/components/atoms/TextAtom.tsx",
+      importName: "import moment from 'moment'",
+      options: [
+        {
+          filePath: "**/components/atoms/**",
+          importName: "react-redux",
+        },
+      ],
+    },
   ]
     .map((_validFile) => {
       return {
@@ -148,6 +159,8 @@ ruleTester.run("no-use-specific-imports", noUseSpecificImports, {
       ],
       options: defaultLibraryOption,
     },
+
+    // custom message
     {
       filename: "./test/samples/react/components/atoms/ButtonAtom.tsx",
       code: "import { RootState } from '../stores'",
@@ -185,6 +198,7 @@ ruleTester.run("no-use-specific-imports", noUseSpecificImports, {
 /**
  * loadSampleSourceFile
  */
+/*
 function loadSampleSourceFile(path: string): string {
   if (path == null || path === "") return "";
   if (fs.existsSync(path)) {
@@ -192,6 +206,7 @@ function loadSampleSourceFile(path: string): string {
   }
   return "";
 }
+*/
 
 /*
 // invalid files

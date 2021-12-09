@@ -16,6 +16,7 @@ export interface NoUseSpecificImportsConfigItem {
   message?: string;
 }
 
+/*
 const configRuleItem = {
   type: "array",
   items: {
@@ -49,6 +50,7 @@ const configRuleItem = {
     ],
   },
 };
+*/
 
 /**
  * RuleModule
@@ -86,9 +88,9 @@ const ruleModule: Rule.RuleModule = {
     /**
      * checkOptionFormat
      */
-    const checkOptionFormat = () => {
-      console.log(options);
-    };
+    // const checkOptionFormat = () => {
+    //   // console.log(options);
+    // };
 
     /**
      * checkNode
@@ -99,12 +101,6 @@ const ruleModule: Rule.RuleModule = {
         | (ESTree.ExportNamedDeclaration & Rule.NodeParentExtension)
     ) => {
       const importFrom = node?.source?.value || "";
-
-      console.log("ImportDeclaration", {
-        targetFilePath,
-        importFrom,
-        options,
-      });
 
       if (typeof importFrom === "string") {
         // check allow import
@@ -121,10 +117,6 @@ const ruleModule: Rule.RuleModule = {
             targetFilePath,
             importFrom
           );
-
-          console.log("not allow", {
-            errorConfig,
-          });
 
           // custom message
           if (errorConfig && errorConfig.message) {

@@ -19,40 +19,40 @@ export enum WebApiResponseCode {
  *
  */
 export enum WebApiMethod {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  PATCH = 'PATCH',
-  DELETE = 'DELETE',
+  GET = "GET",
+  POST = "POST",
+  PUT = "PUT",
+  PATCH = "PATCH",
+  DELETE = "DELETE",
 }
 
 /**
  * http: content type
  */
 export enum WebApiContentType {
-  JSON = 'application/json; charset=UTF-8',
-  MULTI_PART = 'multipart/form-data',
+  JSON = "application/json; charset=UTF-8",
+  MULTI_PART = "multipart/form-data",
 }
 
 /**
  * http: token type
  */
 export enum WebApiTokenType {
-  BEARER = 'Bearer',
+  BEARER = "Bearer",
 }
 
 /**
  * http: token header key
  */
 export enum WebApiTokenHeaderKey {
-  AUTHORIZATION = 'Authorization',
+  AUTHORIZATION = "Authorization",
 }
 
-export type HttpRequestParams = { [key: string]: any }
+export type HttpRequestParams = { [key: string]: any };
 
 export interface HttpResponse {
-  status: WebApiResponseCode
-  headers: any
-  data: any
-  errorMessage: string
+  status: WebApiResponseCode;
+  headers: any;
+  data: any;
+  errorMessage: string;
 }

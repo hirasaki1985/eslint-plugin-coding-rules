@@ -2,9 +2,9 @@
  * health check
  */
 interface HealthCheckWebApiRequest {
-  _?: boolean
+  _?: boolean;
 }
 
 interface HealthCheckWebApiResponse {
-  success: boolean
+  success: boolean;
 }

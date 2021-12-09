@@ -1,11 +1,11 @@
-import React from 'react'
-import ButtonAtom from '../atoms/ButtonAtom'
+import React from "react";
+import ButtonAtom from "../atoms/ButtonAtom";
 
 /**
  * Props
  */
 interface HealthCheckMoleculesProps {
-  onClickHealthCheckButton: () => void
+  onClickHealthCheckButton: () => void;
 }
 
 /**
@@ -17,6 +17,6 @@ const HealthCheckMolecules: React.FC<HealthCheckMoleculesProps> = ({
   <div>
     <ButtonAtom value="疎通テスト" onClick={onClickHealthCheckButton} />
   </div>
-)
+);
 
-export default HealthCheckMolecules
+export default HealthCheckMolecules;

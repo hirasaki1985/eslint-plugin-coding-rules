@@ -1,24 +1,24 @@
-import axios, { AxiosInstance } from 'axios'
-import { WebApiContentType, WebApiMethod } from '../../consts/HttpConsts'
-import DotEnv from '../../consts/DotEnv'
-import WebApiRequest from './WebApiRequest'
+import axios, { AxiosInstance } from "axios";
+import { WebApiContentType, WebApiMethod } from "../../consts/HttpConsts";
+import DotEnv from "../../consts/DotEnv";
+import WebApiRequest from "./WebApiRequest";
 
 class WebApiRequestBuilder<Request, Response> {
-  private baseUrl: string
+  private baseUrl: string;
 
-  private path: string
+  private path: string;
 
-  private version: string
+  private version: string;
 
-  private method: WebApiMethod
+  private method: WebApiMethod;
 
-  private contentType: WebApiContentType = WebApiContentType.JSON
+  private contentType: WebApiContentType = WebApiContentType.JSON;
 
-  private withAuth: boolean
+  private withAuth: boolean;
 
-  private httpClient: AxiosInstance
+  private httpClient: AxiosInstance;
 
-  private conversionCallback = (data: any): Response => data
+  private conversionCallback = (data: any): Response => data;
 
   /**
    * constructor
@@ -28,44 +28,44 @@ class WebApiRequestBuilder<Request, Response> {
     method: WebApiMethod,
     baseUrl: string = DotEnv.webApi().baseUrl,
     version: string = DotEnv.webApi().defaultVersion,
-    contentType: WebApiContentType = WebApiContentType.JSON,
+    contentType: WebApiContentType = WebApiContentType.JSON
   ) {
-    this.path = path
-    this.method = method
-    this.version = version
-    this.contentType = contentType
-    this.baseUrl = baseUrl
-    this.withAuth = false
+    this.path = path;
+    this.method = method;
+    this.version = version;
+    this.contentType = contentType;
+    this.baseUrl = baseUrl;
+    this.withAuth = false;
 
     // http client
-    this.httpClient = axios.create({})
+    this.httpClient = axios.create({});
   }
 
   /**
    * auth
    */
   public auth(withAuth = false): WebApiRequestBuilder<Request, Response> {
-    this.withAuth = withAuth
-    return this
+    this.withAuth = withAuth;
+    return this;
   }
 
   public setBaseUrl(baseUrl: string): WebApiRequestBuilder<Request, Response> {
-    this.baseUrl = baseUrl
-    return this
+    this.baseUrl = baseUrl;
+    return this;
   }
 
   public setConversionCallback(
-    callback: (data: any) => Response,
+    callback: (data: any) => Response
   ): WebApiRequestBuilder<Request, Response> {
-    this.conversionCallback = callback
-    return this
+    this.conversionCallback = callback;
+    return this;
   }
 
   public setFormat(
-    contentType: WebApiContentType,
+    contentType: WebApiContentType
   ): WebApiRequestBuilder<Request, Response> {
-    this.contentType = contentType
-    return this
+    this.contentType = contentType;
+    return this;
   }
 
   public build(): WebApiRequest<Request, Response> {
@@ -77,9 +77,9 @@ class WebApiRequestBuilder<Request, Response> {
       this.contentType,
       this.withAuth,
       this.httpClient,
-      this.conversionCallback,
-    )
+      this.conversionCallback
+    );
   }
 }
 
-export default WebApiRequestBuilder
+export default WebApiRequestBuilder;

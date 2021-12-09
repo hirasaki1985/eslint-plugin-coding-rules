@@ -2,6 +2,6 @@
  * Health Check
  */
 interface HealthCheckResponse {
-  success: boolean
-  checkTime: Moment
+  success: boolean;
+  checkTime: Moment;
 }

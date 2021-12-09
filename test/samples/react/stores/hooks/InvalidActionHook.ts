@@ -1,7 +1,7 @@
-import { useCallback } from 'react'
-import { useDispatch } from 'react-redux'
-import ServiceFactory from '../../modules/ServiceFactory'
-import { stateActionHealthCheck } from '../state/health_check/HealthCheckStateAction'
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import ServiceFactory from "../../modules/ServiceFactory";
+import { stateActionHealthCheck } from "../state/health_check/HealthCheckStateAction";
 import HealthCheckRepository from "../../modules/health_check/HealthCheckRepository";
 
 /**
@@ -9,17 +9,17 @@ import HealthCheckRepository from "../../modules/health_check/HealthCheckReposit
  */
 // eslint-disable-next-line import/prefer-default-export
 export function useInvalidAction() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return useCallback(async (): Promise<HealthCheckResponse> => {
-    const repository = new HealthCheckRepository()
+    const repository = new HealthCheckRepository();
 
     // execute service
-    const result = await repository.healthCheck()
+    const result = await repository.healthCheck();
 
     // dispatch
-    dispatch(stateActionHealthCheck(result))
+    dispatch(stateActionHealthCheck(result));
 
-    return result
-  }, [])
+    return result;
+  }, []);
 }
