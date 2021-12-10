@@ -21,19 +21,21 @@ Finally, enable rules that you would like to use.
 ```
   "rules": {
     "no-use-specific-imports": [
-      {
-        filePath: [
-          "**/components/**",
-        ],
-        importName: ["react-redux", "**/stores"],
-      },
-      {
-        filePath: [
-          "**/pages/**",
-        ],
-        importName: ["**/*Service", "**/ServiceFactory"],
-        message: "'{{importSource}}'からは'{{importFrom}}'をインポートすることはできません。",
-      },
+      "error", [
+        {
+          filePath: [
+            "**/components/**",
+          ],
+          importName: ["react-redux", "**/stores"],
+        },
+        {
+          filePath: [
+            "**/pages/**",
+          ],
+          importName: ["**/*Service", "**/ServiceFactory"],
+          message: "'{{importSource}}'からは'{{importFrom}}'をインポートすることはできません。",
+        },
+      ]
     ]
   }
 ```
