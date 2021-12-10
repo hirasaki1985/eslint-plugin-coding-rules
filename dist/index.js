@@ -1,1 +1,17 @@
-var h=Object.create;var n=Object.defineProperty;var d=Object.getOwnPropertyDescriptor;var y=Object.getOwnPropertyNames;var A=Object.getPrototypeOf,R=Object.prototype.hasOwnProperty;var m=e=>n(e,"__esModule",{value:!0});var x=(e,r)=>{m(e);for(var t in r)n(e,t,{get:r[t],enumerable:!0})},U=(e,r,t)=>{if(r&&typeof r=="object"||typeof r=="function")for(let i of y(r))!R.call(e,i)&&i!=="default"&&n(e,i,{get:()=>r[i],enumerable:!(t=d(r,i))||t.enumerable});return e},C=e=>U(m(n(e!=null?h(A(e)):{},"default",e&&e.__esModule&&"default"in e?{get:()=>e.default,enumerable:!0}:{value:e,enumerable:!0})),e);x(exports,{default:()=>E});var u=C(require("micromatch"));function c(e,r){if(e==null||e==="")return"";if(r==null)return e;let t=e;return Object.keys(r).forEach(i=>{let o=new RegExp(P(i),"g");t=t.replace(o,String(r[i]))}),t}function P(e){return e.replace(/[.*+\-?^${}()|[\]\\]/g,"\\$&")}function f(e,r,t){return e==null&&!Array.isArray(e)?!0:e.every(i=>I(i,r,t))}function g(e,r,t){if(!(e==null&&!Array.isArray(e)))return e.find(i=>!I(i,r,t))}function I(e,r,t){return e.filePath==null||e.filePath===""||e.importName==null||e.importName===""?!0:(typeof e.filePath=="string"||Array.isArray(e.filePath))&&(typeof e.importName=="string"||Array.isArray(e.importName))&&N(r,e.filePath)?!N(t,e.importName):!0}function N(e,r,t={basename:!0,dot:!1,strictSlashes:!0,debug:!0}){return e==null||e===""||r==null||e===""?!1:u.isMatch(c(e,{"../":"./","././":"./","/./":"/"}),r,t)}var w={meta:{docs:{description:"Disallow specific imports from specific dirs or source files."},type:"suggestion",messages:{invalidOptionsFormat:"options format is wrong.",invalidImport:"'{{importSource}}' can not import '{{importFrom}}'"}},create(e){let r=e.options,t=e.getPhysicalFilename(),i=o=>{var a;let s=((a=o==null?void 0:o.source)==null?void 0:a.value)||"";if(typeof s=="string"&&!f(r,t,s)){let p=g(r,t,s);p&&p.message?e.report({node:o,message:p.message,data:{importSource:t,importFrom:s}}):e.report({node:o,messageId:"invalidImport",data:{importSource:t,importFrom:s}})}};return{ImportDeclaration:i,ExportNamedDeclaration(o){o.source&&i(o)}}}},S=w;var E={rules:{"no-use-specific-imports":S},configs:{all:{plugins:["coding-rules"]}}};0&&(module.exports={});
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const no_use_specific_imports_1 = __importDefault(require("./rules/no-use-specific-imports"));
+exports.default = {
+    rules: {
+        "no-use-specific-imports": no_use_specific_imports_1.default,
+    },
+    configs: {
+        all: {
+            plugins: ["coding-rules"],
+        },
+    },
+};
+//# sourceMappingURL=index.js.map

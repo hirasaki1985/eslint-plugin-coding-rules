@@ -22,7 +22,8 @@
     "eslint-fix": "eslint --ext .ts . --fix",
     "prettier-fix": "prettier --write . ",
     "fix": "npm run eslint-fix && npm run prettier-fix",
-    "build": "tsup src/index.ts --no-splitting --minify"
+    "build": "tsc",
+    "build:backup": "tsup src/index.ts --no-splitting --minify"
   },
   "author": "Mamoru Hirasaki <hirasaki1985@gmail.com> (https://walking-succession-falls.com/)",
   "license": "MIT",
