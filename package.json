@@ -1,5 +1,5 @@
 {
-  "name": "@hirasaki1985/eslint-plugin-coding-rules",
+  "name": "eslint-plugin-coding-rules",
   "version": "1.0.0",
   "description": "eslint plugin for making coding rules.",
   "keywords": [
