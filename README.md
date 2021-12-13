@@ -20,20 +20,22 @@ Finally, enable rules that you would like to use.
 
 ```
   "rules": {
-    "coding-rules/no-use-specific-imports": [
-      {
-        filePath: [
-          "**/components/**",
-        ],
-        importName: ["react-redux", "**/stores"],
-      },
-      {
-        filePath: [
-          "**/pages/**",
-        ],
-        importName: ["**/*Service", "**/ServiceFactory"],
-        message: "'{{importSource}}'からは'{{importFrom}}'をインポートすることはできません。",
-      },
+    "no-use-specific-imports": [
+      "error", [
+        {
+          filePath: [
+            "**/components/**",
+          ],
+          importName: ["react-redux", "**/stores"],
+        },
+        {
+          filePath: [
+            "**/pages/**",
+          ],
+          importName: ["**/*Service", "**/ServiceFactory"],
+          message: "'{{importSource}}'からは'{{importFrom}}'をインポートすることはできません。",
+        },
+      ]
     ]
   }
 ```
@@ -73,7 +75,7 @@ format is
 
 ```
   "rules": {
-    "coding-rules/no-use-specific-imports": [
+    "no-use-specific-imports": [
       'error',
       [
         {
