@@ -9,7 +9,6 @@ import {
  * options
  */
 const defaultLibraryOption = [
-  0,
   [
     // redux, stores
     {
@@ -114,7 +113,6 @@ ruleTester.run("no-use-specific-imports", ruleModule, {
       filePath: "./test/samples/react/components/atoms/TextAtom.tsx",
       importName: "import moment from 'moment'",
       options: [
-        0,
         [
           {
             filePath: "**/components/atoms/**",
@@ -176,7 +174,6 @@ ruleTester.run("no-use-specific-imports", ruleModule, {
         },
       ],
       options: [
-        0,
         [
           {
             filePath: ["**/components/atoms/**"],
