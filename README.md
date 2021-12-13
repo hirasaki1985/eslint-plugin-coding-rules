@@ -5,7 +5,7 @@ eslint plugin for making coding rules.
 ## installation
 
 ```
-npm install --save-dev eslint-plugin-coding-rules
+npm install --save-dev @hirasaki1985/eslint-plugin-coding-rules
 ```
 
 Then, in your `.eslintrc.json`
