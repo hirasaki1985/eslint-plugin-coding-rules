@@ -1,52 +1,8 @@
-# eslint-plugin-coding-rules
-
-eslint plugin for making coding rules.
-
-## installation
-
-```
-$ npm install --save-dev @hirasaki/eslint-plugin-coding-rules
-```
-
-Then, in your `.eslintrc.json`
-
-```
-{
-  "plugins": ["@hirasaki/coding-rules"],
-}
-```
-
-Finally, enable rules that you would like to use.
-
-```
-  "rules": {
-    "@hirasaki/coding-rules/no-use-specific-imports": [
-      "error", [
-        {
-          filePath: [
-            "**/components/**",
-          ],
-          importName: ["react-redux", "**/stores"],
-        },
-        {
-          filePath: [
-            "**/pages/**",
-          ],
-          importName: ["**/*Service", "**/ServiceFactory"],
-          message: "'{{importSource}}'からは'{{importFrom}}'をインポートすることはできません。",
-        },
-      ]
-    ]
-  }
-```
-
-## Rule Details
-
-### no-use-specific-imports
+# no-use-specific-imports
 
 Disallow specific imports from specific dirs or source files.
 
-### Options
+## Options
 
 format is
 
@@ -64,14 +20,14 @@ format is
 | importName | string or string[] | Enter the name of the libraries for which import is prohibited. |
 | message    | string             | custom error message.                                           |
 
-#### message format
+## message format
 
 | key              | description                    |
 | ---------------- | ------------------------------ |
 | {{importSource}} | replaces the source file path. |
 | {{importFrom}}   | replaces the import name.      |
 
-### example
+# example
 
 ```
   "rules": {
@@ -101,7 +57,7 @@ Files with paths that match `filePath` will not be able to import the library sp
 - `components/atoms/ButtonAtom.tsx` can not import `react-redux` or `**/stores`.
 - `pages/MainPage.tsx` can not import `**/Service` or `**/ServiceFactory`.
 
-#### architecture example
+## architecture example
 
 ![architecture_example](./docs/architecture_example.jpg)
 
@@ -112,7 +68,7 @@ Control the data processing flow by preventing direct import.
 
 react sample code is here [sample code](./test/samples/react)
 
-### Implementation
+# Implementation
 
 - [Rule source](./src/rules/no-use-specific-imports.ts)
 - [Test source](./test/rules/no-use-specific-imports.test.ts)

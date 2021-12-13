@@ -55,7 +55,7 @@ const configRuleItem = {
 /**
  * RuleModule
  */
-const ruleModule: Rule.RuleModule = {
+const _ruleModule: Rule.RuleModule = {
   meta: {
     docs: {
       description:
@@ -165,4 +165,4 @@ const ruleModule: Rule.RuleModule = {
   },
 };
 
-export default ruleModule;
+export const ruleModule = _ruleModule;

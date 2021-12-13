@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ruleModule = void 0;
 const NoUseSpecificImportsService_1 = require("../services/NoUseSpecificImportsService");
 /*
 const configRuleItem = {
@@ -39,7 +40,7 @@ const configRuleItem = {
 /**
  * RuleModule
  */
-const ruleModule = {
+const _ruleModule = {
     meta: {
         docs: {
             description: "Disallow specific imports from specific dirs or source files.",
@@ -131,5 +132,5 @@ const ruleModule = {
         };
     },
 };
-exports.default = ruleModule;
+exports.ruleModule = _ruleModule;
 //# sourceMappingURL=no-use-specific-imports.js.map

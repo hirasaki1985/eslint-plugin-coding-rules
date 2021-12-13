@@ -1,12 +1,11 @@
-import noUseSpecificImports from "./rules/no-use-specific-imports";
+import { ruleModule } from "./rules/no-use-specific-imports";
 
-export default {
-  rules: {
-    "no-use-specific-imports": noUseSpecificImports,
-  },
-  configs: {
-    all: {
-      plugins: ["coding-rules"],
-    },
+export const rules = {
+  "no-use-specific-imports": ruleModule,
+};
+
+export const configs = {
+  all: {
+    plugins: ["coding-rules"],
   },
 };
