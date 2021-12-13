@@ -20,7 +20,7 @@ Finally, enable rules that you would like to use.
 
 ```
   "rules": {
-    "no-use-specific-imports": [
+    "coding-rules/no-use-specific-imports": [
       {
         filePath: [
           "**/components/**",
@@ -73,7 +73,7 @@ format is
 
 ```
   "rules": {
-    "no-use-specific-imports": [
+    "coding-rules/no-use-specific-imports": [
       'error',
       [
         {
