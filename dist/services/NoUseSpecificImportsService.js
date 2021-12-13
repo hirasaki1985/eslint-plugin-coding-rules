@@ -55,9 +55,11 @@ exports.getNotAllowImport = getNotAllowImport;
  */
 function checkAllowImport(config, filePath, importLibraryName) {
     // validate
-    if (config.filePath == null || config.filePath === "")
+    if (!Array.isArray(config) &&
+        (config.filePath == null || config.filePath === ""))
         return true;
-    if (config.importName == null || config.importName === "")
+    if (!Array.isArray(config) &&
+        (config.importName == null || config.importName === ""))
         return true;
     if ((typeof config.filePath === "string" || Array.isArray(config.filePath)) &&
         (typeof config.importName === "string" || Array.isArray(config.importName))) {

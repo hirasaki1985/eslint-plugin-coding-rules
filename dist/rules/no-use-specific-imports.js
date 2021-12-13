@@ -72,6 +72,9 @@ const _ruleModule = {
     create(context) {
         const options = context.options;
         const targetFilePath = context.getPhysicalFilename();
+        const pluginOptions = options != null && Array.isArray(options) && options.length > 0
+            ? options[0]
+            : [];
         /**
          * checkOptionFormat
          */
@@ -86,10 +89,10 @@ const _ruleModule = {
             const importFrom = ((_a = node === null || node === void 0 ? void 0 : node.source) === null || _a === void 0 ? void 0 : _a.value) || "";
             if (typeof importFrom === "string") {
                 // check allow import
-                const isAllow = (0, NoUseSpecificImportsService_1.isAllowImport)(options, targetFilePath, importFrom);
+                const isAllow = (0, NoUseSpecificImportsService_1.isAllowImport)(pluginOptions, targetFilePath, importFrom);
                 // not allow
                 if (!isAllow) {
-                    const errorConfig = (0, NoUseSpecificImportsService_1.getNotAllowImport)(options, targetFilePath, importFrom);
+                    const errorConfig = (0, NoUseSpecificImportsService_1.getNotAllowImport)(pluginOptions, targetFilePath, importFrom);
                     // custom message
                     if (errorConfig && errorConfig.message) {
                         // create report
@@ -132,5 +135,6 @@ const _ruleModule = {
         };
     },
 };
+// export const noUserSpecificImportsRuleModule = _noUserSpecificImportsRuleModule;
 exports.ruleModule = _ruleModule;
 //# sourceMappingURL=no-use-specific-imports.js.map
