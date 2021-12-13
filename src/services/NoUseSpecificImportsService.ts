@@ -50,8 +50,16 @@ export function checkAllowImport(
   importLibraryName: string
 ): boolean {
   // validate
-  if (config.filePath == null || config.filePath === "") return true;
-  if (config.importName == null || config.importName === "") return true;
+  if (
+    !Array.isArray(config) &&
+    (config.filePath == null || config.filePath === "")
+  )
+    return true;
+  if (
+    !Array.isArray(config) &&
+    (config.importName == null || config.importName === "")
+  )
+    return true;
 
   if (
     (typeof config.filePath === "string" || Array.isArray(config.filePath)) &&

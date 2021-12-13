@@ -89,6 +89,11 @@ const _ruleModule: Rule.RuleModule = {
     const options = context.options;
     const targetFilePath = context.getPhysicalFilename();
 
+    const pluginOptions: NoUseSpecificImportsConfig =
+      options != null && Array.isArray(options) && options.length > 0
+        ? options[0]
+        : [];
+
     /**
      * checkOptionFormat
      */
@@ -109,7 +114,7 @@ const _ruleModule: Rule.RuleModule = {
       if (typeof importFrom === "string") {
         // check allow import
         const isAllow = isAllowImport(
-          options as NoUseSpecificImportsConfig,
+          pluginOptions,
           targetFilePath,
           importFrom
         );
@@ -117,7 +122,7 @@ const _ruleModule: Rule.RuleModule = {
         // not allow
         if (!isAllow) {
           const errorConfig = getNotAllowImport(
-            options as NoUseSpecificImportsConfig,
+            pluginOptions,
             targetFilePath,
             importFrom
           );
@@ -165,4 +170,5 @@ const _ruleModule: Rule.RuleModule = {
   },
 };
 
+// export const noUserSpecificImportsRuleModule = _noUserSpecificImportsRuleModule;
 export const ruleModule = _ruleModule;

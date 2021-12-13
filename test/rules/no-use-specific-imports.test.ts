@@ -1,7 +1,5 @@
 import { RuleTester } from "eslint";
-import noUseSpecificImports, {
-  NoUseSpecificImportsConfig,
-} from "../../src/rules/no-use-specific-imports";
+import { ruleModule } from "../../src/rules/no-use-specific-imports";
 import {
   parserValidOptionsMapper,
   parserInValidOptionsMapper,
@@ -10,39 +8,42 @@ import {
 /**
  * options
  */
-const defaultLibraryOption: NoUseSpecificImportsConfig = [
-  // redux, stores
-  {
-    filePath: [
-      "**/components/atoms/**",
-      "**/components/molecules/**",
-      "**/components/organisms/**",
-    ],
-    importName: ["react-redux", "**/stores"],
-  },
+const defaultLibraryOption = [
+  0,
+  [
+    // redux, stores
+    {
+      filePath: [
+        "**/components/atoms/**",
+        "**/components/molecules/**",
+        "**/components/organisms/**",
+      ],
+      importName: ["react-redux", "**/stores"],
+    },
 
-  // service
-  {
-    filePath: [
-      "**/components/atoms/**",
-      "**/components/molecules/**",
-      "**/components/organisms/**",
-      "**/pages/**",
-    ],
-    importName: ["**/*Service", "**/ServiceFactory"],
-  },
+    // service
+    {
+      filePath: [
+        "**/components/atoms/**",
+        "**/components/molecules/**",
+        "**/components/organisms/**",
+        "**/pages/**",
+      ],
+      importName: ["**/*Service", "**/ServiceFactory"],
+    },
 
-  // repository
-  {
-    filePath: [
-      "**/components/atoms/**",
-      "**/components/molecules/**",
-      "**/components/organisms/**",
-      "**/pages/**",
-      "**/stores/hooks/**",
-    ],
-    importName: "**/*Repository",
-  },
+    // repository
+    {
+      filePath: [
+        "**/components/atoms/**",
+        "**/components/molecules/**",
+        "**/components/organisms/**",
+        "**/pages/**",
+        "**/stores/hooks/**",
+      ],
+      importName: "**/*Repository",
+    },
+  ],
 ];
 
 const ruleTester = new RuleTester();
@@ -50,7 +51,7 @@ const ruleTester = new RuleTester();
 /**
  * run: no-use-specific-imports"
  */
-ruleTester.run("no-use-specific-imports", noUseSpecificImports, {
+ruleTester.run("no-use-specific-imports", ruleModule, {
   /**
    * valid
    */
@@ -113,10 +114,13 @@ ruleTester.run("no-use-specific-imports", noUseSpecificImports, {
       filePath: "./test/samples/react/components/atoms/TextAtom.tsx",
       importName: "import moment from 'moment'",
       options: [
-        {
-          filePath: "**/components/atoms/**",
-          importName: "react-redux",
-        },
+        0,
+        [
+          {
+            filePath: "**/components/atoms/**",
+            importName: "react-redux",
+          },
+        ],
       ],
     },
   ]
@@ -172,12 +176,15 @@ ruleTester.run("no-use-specific-imports", noUseSpecificImports, {
         },
       ],
       options: [
-        {
-          filePath: ["**/components/atoms/**"],
-          importName: ["react-redux", "**/stores"],
-          message:
-            "'{{importSource}}'からは'{{importFrom}}'をインポートすることはできません。",
-        },
+        0,
+        [
+          {
+            filePath: ["**/components/atoms/**"],
+            importName: ["react-redux", "**/stores"],
+            message:
+              "'{{importSource}}'からは'{{importFrom}}'をインポートすることはできません。",
+          },
+        ],
       ],
     },
   ]
